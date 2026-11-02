@@ -12,6 +12,7 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.libtorrent4j.AnnounceEntry
 import org.libtorrent4j.Priority
 import org.libtorrent4j.SessionManager
 import org.libtorrent4j.Sha1Hash
@@ -70,6 +71,8 @@ class Libtorrent4jTorrentEngine(
         throw IOException("The torrent did not start")
       }
       try {
+        // the metadata of a magnet carries no trackers, so they come along from its uri
+        trackersOf(torrent.magnetUri).forEach { handle.addTracker(AnnounceEntry(it)) }
         // only the selected files are wanted, the rest of the torrent stays out
         val selected = files.map { it.index }.toSet()
         val priorities =
@@ -105,6 +108,21 @@ class Libtorrent4jTorrentEngine(
           }
       }
     }
+
+  /** The tracker urls inside a magnet uri, its `tr=` parameters. */
+  private fun trackersOf(magnetUri: String): List<String> =
+    magnetUri
+      .substringAfter('?', "")
+      .split("&")
+      .mapNotNull { parameter ->
+        parameter
+          .takeIf { it.startsWith("tr=") }
+          ?.removePrefix("tr=")
+          ?.let { value ->
+            runCatching { java.net.URLDecoder.decode(value, "UTF-8") }.getOrNull()
+          }
+      }
+      .filter { it.startsWith("http") }
 
   private fun cacheMetadata(
     cacheDir: File,
