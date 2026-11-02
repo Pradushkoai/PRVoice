@@ -155,6 +155,7 @@ private fun LazyListScope.sections(
       useGrid = viewState.useGrid,
       onFoldersClick = listener::openFolderPicker,
       onAudiobookshelfClick = listener::openAudiobookshelf,
+      onDownloadsClick = listener::openDownloads,
       onUseGridChange = listener::setUseGrid,
     )
   }

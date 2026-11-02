@@ -141,6 +141,54 @@
     <string name="book.download.waiting_for_connection">Waiting for a connection</string>
     <!-- Shown while the download of a server book waits, because downloading over mobile data is off. -->
     <string name="book.download.waiting_for_wifi">Waiting for Wi-Fi</string>
+    <!-- Action in the book details of the download feature that starts downloading the files into the library. -->
+    <string name="bookdownload.details.download">Download into the library</string>
+    <!-- Number of files a book from the download feature consists of. -->
+    <string name="bookdownload.details.files">Files: %1$d</string>
+    <!-- Shown in the book details of the download feature once all files are in the library. -->
+    <string name="bookdownload.details.in_library">In your library</string>
+    <!-- How far the download of a book from the download feature got, like "12 of 42 files". -->
+    <string name="bookdownload.details.progress">%1$d of %2$d files</string>
+    <!-- Shown in the book details of the download feature while the book waits for another download to finish. -->
+    <string name="bookdownload.details.queued">Queued</string>
+    <!-- Note in the book details of the download feature for a torrent, which the next version will download. -->
+    <string name="bookdownload.details.torrent_soon">Torrent downloads arrive with the next version</string>
+    <!-- Action in the downloads screen that removes a book from the download queue. The files already downloaded stay. -->
+    <string name="bookdownload.downloads.delete">Remove from the queue</string>
+    <!-- Text in the empty downloads screen. -->
+    <string name="bookdownload.downloads.empty">Books you download appear here</string>
+    <!-- Action in the downloads screen that stops a running download, to continue it later. -->
+    <string name="bookdownload.downloads.pause">Pause</string>
+    <!-- Action in the downloads screen that continues a paused or failed download. -->
+    <string name="bookdownload.downloads.resume">Continue</string>
+    <!-- Title of the screen with the queued, running and finished downloads. -->
+    <string name="bookdownload.downloads.title">Downloads</string>
+    <!-- Error text in the book details of the download feature, when the source site changed and the parser needs an update. -->
+    <string name="bookdownload.error.changed">The site changed. The source needs an update.</string>
+    <!-- Error text in the book details of the download feature, when the download failed because of the connection. -->
+    <string name="bookdownload.error.network">The download failed. Check your connection and try again.</string>
+    <!-- Error text in the book details of the download feature, when the library has no folder to download into. -->
+    <string name="bookdownload.error.no_folder">Add a library folder first, then download the book.</string>
+    <!-- Error text in the book details of the download feature, when the download failed for an unknown reason. -->
+    <string name="bookdownload.error.unknown">The download failed.</string>
+    <!-- Name of the notification channel for books that download from the online sources. -->
+    <string name="bookdownload.notification.channel">Book downloads</string>
+    <!-- Notification text once a book of the download feature finished downloading. The title is the name of the book. -->
+    <string name="bookdownload.notification.done">Ready to listen</string>
+    <!-- Notification text when the download of a book failed. The title is the name of the book. -->
+    <string name="bookdownload.notification.failed">Download didn\'t finish</string>
+    <!-- Action at the end of the search results of the download feature that loads the next page of a source. -->
+    <string name="bookdownload.search.load_more">Show more</string>
+    <!-- Hint in the search field of the download feature. -->
+    <string name="bookdownload.search.hint">Title or author</string>
+    <!-- Text in the search of the download feature when the sources found nothing. -->
+    <string name="bookdownload.search.no_results">Nothing found</string>
+    <!-- Text in the search of the download feature while the sources search. -->
+    <string name="bookdownload.search.searching">Searching…</string>
+    <!-- Text in the search of the download feature when some sources failed and their results are missing. -->
+    <string name="bookdownload.search.source_failed">Some sources didn\'t answer</string>
+    <!-- Title of the search screen of the download feature. -->
+    <string name="bookdownload.search.title">Find audiobooks</string>
     <!-- Label for the field with the book's author, in the sheet that edits a book. -->
     <string name="book.edit.author.label">Author</string>
     <!-- Bottom-sheet item for choosing a cover from local files. -->

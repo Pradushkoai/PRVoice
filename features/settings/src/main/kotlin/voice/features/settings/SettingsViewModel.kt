@@ -339,6 +339,10 @@ class SettingsViewModel(
     }
   }
 
+  override fun openDownloads() {
+    navigator.goTo(Destination.BookDownloads)
+  }
+
   override fun setAutoSleepTimer(checked: Boolean) {
     mainScope.launch {
       sleepTimerPreferenceStore.updateData { currentPrefs ->

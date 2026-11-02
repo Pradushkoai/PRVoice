@@ -286,6 +286,10 @@ class BookOverviewViewModel(
     navigator.goTo(Destination.LibrarySearch)
   }
 
+  fun onBookSearchClick() {
+    navigator.goTo(Destination.BookSearch)
+  }
+
   fun onBookClick(id: BookId) {
     navigator.goTo(Destination.Playback(id))
   }

@@ -67,6 +67,8 @@ include(":core:analytics:firebase")
 
 include(":core:common")
 
+include(":core:downloader")
+
 include(":core:booksources:api")
 
 include(":core:booksources:bazaknig")
@@ -144,6 +146,8 @@ include(":core:audiobookshelf:api")
 include(":core:audiobookshelf:impl")
 
 include(":features:audiobookshelf")
+
+include(":features:bookDownload")
 
 include(":core:snapshot")
 

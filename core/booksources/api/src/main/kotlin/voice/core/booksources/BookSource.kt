@@ -27,6 +27,7 @@ data class SearchPage(
   val hasNextPage: Boolean,
 )
 
+@Serializable
 data class SearchResult(
   val sourceId: String,
   val title: String,

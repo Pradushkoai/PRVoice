@@ -57,6 +57,7 @@ internal fun LibraryTopBar(
   isLoading: Boolean,
   scrollBehavior: SearchBarScrollBehavior?,
   onSearchClick: () -> Unit,
+  onBookSearchClick: () -> Unit,
   onBookFolderClick: () -> Unit,
   onFilterClick: () -> Unit,
   onSettingsClick: () -> Unit,
@@ -82,6 +83,12 @@ internal fun LibraryTopBar(
         }
       },
       actions = {
+        IconButton(onClick = onBookSearchClick) {
+          Icon(
+            imageVector = VoiceIcons.Download,
+            contentDescription = stringResource(StringsR.string.bookdownload_search_title),
+          )
+        }
         if (showFolderPickerIcon) {
           BookFolderIcon(onClick = onBookFolderClick)
         }
@@ -171,6 +178,7 @@ private fun LibraryTopBarPreview() {
       isLoading = false,
       scrollBehavior = null,
       onSearchClick = {},
+      onBookSearchClick = {},
       onBookFolderClick = {},
       onFilterClick = {},
       onSettingsClick = {},

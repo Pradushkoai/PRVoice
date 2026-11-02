@@ -21,6 +21,7 @@ object BookSourcesModule {
 
   @Provides
   @SingleIn(AppScope::class)
+  @SourceHttpClient
   fun sourceHttpClient(): OkHttpClient =
     OkHttpClient.Builder()
       .connectTimeout(15, TimeUnit.SECONDS)

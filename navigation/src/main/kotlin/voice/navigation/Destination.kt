@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import voice.core.booksources.SearchResult
 import voice.core.common.serialization.UriSerializer
 import voice.core.data.BookId
 import voice.core.data.folders.FolderType
@@ -90,6 +91,26 @@ sealed interface Destination {
   data class Series(val name: String) : Compose {
     override val trackingName: String
       get() = "Series"
+  }
+
+  /** Search audiobooks on the online book sources and download them into the library. */
+  @Serializable
+  data object BookSearch : Compose {
+    override val trackingName: String
+      get() = "BookSearch"
+  }
+
+  @Serializable
+  data class BookDetails(val result: SearchResult) : Compose {
+    override val trackingName: String
+      get() = "BookDetails"
+  }
+
+  /** The queued, running and finished downloads of the online book sources. */
+  @Serializable
+  data object BookDownloads : Compose {
+    override val trackingName: String
+      get() = "BookDownloads"
   }
 
   @Serializable
