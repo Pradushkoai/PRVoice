@@ -58,6 +58,9 @@ class RutorParserTest {
 
 class RutorSourceTest {
 
+  private fun resource(name: String): String =
+    javaClass.classLoader!!.getResourceAsStream(name)!!.readBytes().decodeToString()
+
   @Test
   fun `the details are built from the torrent of the search result`() = runTest {
     val source = RutorSource(listOf("https://rutor.info"), okhttp3.OkHttpClient())
@@ -82,5 +85,31 @@ class RutorSourceTest {
     assertEquals("https://d.rutor.info/download/1112294", files.torrentUrl)
     assertEquals(4, files.seeders)
     assertNull(files.sizeBytes)
+  }
+
+  @Test
+  fun `a failing mirror falls back to the next one`() = runTest {
+    val server = mockwebserver3.MockWebServer()
+    server.start()
+    try {
+      server.enqueue(
+        mockwebserver3.MockResponse(code = 200, body = resource("search.html")),
+      )
+      val mirror = server.url("/").toString().trimEnd('/')
+      // nothing listens on port 1, so the first mirror always refuses the connection
+      val source = RutorSource(listOf("http://localhost:1", mirror), okhttp3.OkHttpClient())
+
+      val page = source.search("гоголь", page = 0)
+
+      assertEquals(54, page.results.size)
+      // the urls of the results point at the mirror that actually answered
+      assertTrue(page.results.first().url.startsWith(mirror))
+      assertEquals(
+        "/search/0/11/000/0/%D0%B3%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C",
+        server.takeRequest().target,
+      )
+    } finally {
+      server.close()
+    }
   }
 }

@@ -26,10 +26,11 @@ class RutorSource(
   override val name = "Rutor"
 
   override suspend fun search(query: String, page: Int): SearchPage {
-    val html = fetchFromAnyMirror { mirror ->
-      RutorParser.searchUrl(query, page).let { mirror + it }
-    }
-    return RutorParser.parseSearch(html, activeMirror)
+    val (mirror, html) =
+      fetchFromAnyMirror { mirror ->
+        RutorParser.searchUrl(query, page).let { mirror + it }
+      }
+    return RutorParser.parseSearch(html, mirror)
   }
 
   override suspend fun details(result: SearchResult): BookInfo {
@@ -40,16 +41,13 @@ class RutorSource(
     return BookInfo(result = result, files = DownloadSpec.from(summary))
   }
 
-  /** The mirror that last answered, used to resolve relative urls of the current page. */
-  private var activeMirror: String = mirrors.first()
-
-  private suspend fun fetchFromAnyMirror(url: (String) -> String): String {
+  /** Returns the mirror that answered together with its page, to resolve relative urls. */
+  private suspend fun fetchFromAnyMirror(url: (String) -> String): Pair<String, String> {
     var lastException: SourceUnavailable? = null
     for (mirror in mirrors) {
       try {
         val html = client.fetch(url(mirror), referer = mirror)
-        activeMirror = mirror
-        return html
+        return mirror to html
       } catch (exception: SourceUnavailable) {
         lastException = exception
       }

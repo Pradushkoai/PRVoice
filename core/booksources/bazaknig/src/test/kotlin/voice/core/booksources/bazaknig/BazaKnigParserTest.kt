@@ -2,6 +2,7 @@ package voice.core.booksources.bazaknig
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -87,6 +88,34 @@ class BazaKnigParserTest {
     val last = tracks.last()
     assertEquals("42 - Глава_42", last.name)
     assertEquals("https://archive.org/download/04_20261030_202610/42.mp3", last.url)
+  }
+
+  @Test
+  fun `a broken decode script is refetched once`() = runTest {
+    var fetches = 0
+    val decoder = PlaylistDecoder {
+      fetches++
+      if (fetches == 1) "function strDecode(s) { throw new Error('broken') }"
+      else resource("decode.js")
+    }
+    val encoded = resource("encoded_playlist.txt")
+
+    // the first fetch returns a broken script; the decode drops it and picks up the fixed one
+    val decoded = decoder.decode(encoded)
+
+    assertTrue("https://archive.org/download/" in decoded)
+    assertEquals(2, fetches)
+
+    // the working script is cached now, further decodes don't fetch again
+    assertEquals(decoded, decoder.decode(encoded))
+    assertEquals(2, fetches)
+  }
+
+  @Test
+  fun `a decode that keeps failing is reported as a changed site`() = runTest {
+    val decoder = PlaylistDecoder { "function strDecode(s) { throw new Error('broken') }" }
+
+    assertFailsWith<SourceChanged> { decoder.decode(resource("encoded_playlist.txt")) }
   }
 
   @Test

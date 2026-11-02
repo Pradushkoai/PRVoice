@@ -21,15 +21,26 @@ internal class PlaylistDecoder(
 
   @Volatile private var decodeJs: String? = null
 
+  /**
+   * Runs the site's decode.js over the encoded playlist. When the script fails it is probably
+   * outdated, so it is dropped and fetched again once; a second failure is reported.
+   */
   suspend fun decode(encoded: String): String {
-    val js =
-      decodeJs
-        ?: run {
-          val fetched = decodeJsProvider()
-          decodeJs = fetched
-          fetched
-        }
-    return withContext(Dispatchers.Default) { run(js, encoded) }
+    var attempts = 0
+    while (true) {
+      val js =
+        decodeJs
+          ?: decodeJsProvider().also { fetched ->
+            decodeJs = fetched
+          }
+      try {
+        return withContext(Dispatchers.Default) { run(js, encoded) }
+      } catch (exception: SourceChanged) {
+        decodeJs = null
+        attempts++
+        if (attempts >= 2) throw exception
+      }
+    }
   }
 
   /** Drops the cached script so the next decode picks up a new version from the site. */
