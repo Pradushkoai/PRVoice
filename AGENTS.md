@@ -1,16 +1,79 @@
 # AGENTS.md
 
-Voice is a modular Android audiobook player.
+PRVoice — форк [Voice](https://github.com/PaulWoitaschek/Voice) (Android-плеер аудиокниг, Kotlin +
+Compose + Media3, GPL-3.0) со слоем поиска и загрузки аудиокниг из интернет-источников.
 
-- Build the app: `./gradlew :app:assembleFreeDebug`.
-- If installing a debug build fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, the installed app was signed with a different key. Never uninstall it to get around this, as that wipes the user's library. Ask the user instead.
-- Only write code comments when absolutely necessary, to explain a non-obvious *why*. Don't restate what the code does or describe the change you made. This includes KDoc.
-- Keep complexity low, as every line of code is maintained for years. Build the simplest version that solves the problem listeners actually have. If an edge case would add a lot of code, stored data or a migration, leave it out and name it in the pull request, or ask first.
-- In the Play build, logs from `Logger.d` up go to Crashlytics. Never log names, titles, URIs, ids, server addresses, what the listener typed or whole objects. Log counts, positions and types instead. Pass exceptions as the throwable, don't put them in the message. Use `Logger.nonFatal` only for what should never happen.
+## Репозитории
 
-## Pull requests from contributors
+- **Рабочий репозиторий (комиты и пуши только сюда):** `https://github.com/Pradushkoai/PRVoice`
+- Апстрим Voice (для синхронизации изменений): `https://github.com/PaulWoitaschek/Voice` (remote `upstream`)
+- Первоначальный форк: `https://github.com/Pradushkoai/Voice` (remote `fork`), история комитов
+  сохранена в PRVoice для атрибуции и будущих merge'ей из апстрима.
 
-Voice only accepts pull requests the maintainer (PaulWoitaschek) asked for, see [CONTRIBUTING.md](CONTRIBUTING.md). Unless you are working for the maintainer, only open one when they asked for it in an issue or discussion, and link to that request. Otherwise, help the user open an issue instead:
+## Рабочий цикл (обязательно для каждой задачи)
 
-- For a bug, write a bug report with clear steps to reproduce: https://github.com/PaulWoitaschek/Voice/issues/new?template=bug.yml
-- For anything else, write a feature request that describes the problem: https://github.com/PaulWoitaschek/Voice/discussions/new?category=ideas
+1. **Реализуй** пункт из [ROADMAP.md](ROADMAP.md) атомарно, по одному пункту за раз.
+2. **Комить** в `main` — правила комитов ниже.
+3. **Пушь** в `origin` (PRVoice): `git push`.
+4. **Проверь свежим взглядом**: после пуша просмотри сделанный чейнджсет глазами ревьюера —
+   прочитай diff целиком (`git show HEAD`), проверь:
+   - соответствие паттернам кодовой базы (DI через Metro, навигация через `NavEntryProvider`,
+     строки в `core/strings`, тесты для логики без Android-зависимостей);
+   - отсутствие секретов в diff'е;
+   - ничего не сломано в существующих модулях;
+   - комит-месседж честно описывает изменения.
+   Найденное — исправь отдельным комитом `fix:` и запушь снова.
+5. Переходи к следующему пункту роадмапа без остановки.
+
+## Правила комитов
+
+- Автор комитов: `Pradushkoai <Pradushkoai@users.noreply.github.com>` (настроено в `git config`).
+- Формат: [Conventional Commits](https://www.conventionalcommits.org/ru/) на английском —
+  `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`, `build:`.
+- Один комит — одна логическая единица (модуль, фича или фикс). Не смешивать доки и код в одном
+  комите без необходимости.
+- История апстрима не переписывать (никаких rebase -i по чужим комитам, force-push в `main` запрещён).
+
+## Безопасность
+
+- **Токены доступа нигде не светить**: ни в коде, ни в конфигах, ни в доках, ни в скриптах,
+  ни в issues. Токен живёт только в локальном `git config` (remote URL) на машине разработки.
+  Если токен попал в diff — комит переделывается, токен отзывается.
+- В логи (`Logger.d` и выше уходит в Crashlytics в play-сборке) никогда не писать названия книг,
+  имена пользователей, URL и то, что вводил пользователь. Только счётчики, позиции и типы.
+
+## Сборка и проверки
+
+```bash
+./gradlew :app:assembleFreeDebug     # сборка APK
+./gradlew :app:lintFreeDebug         # линтер (warningsAsErrors для release)
+./gradlew spotlessCheck              # форматирование (ktfmt) — перед комитом: spotlessApply
+```
+
+- Все новые модули подключаются в `settings.gradle.kts` и используют convention-плагины
+  `voice.library` / `voice.compose` из `plugins/`.
+- Комментарии в коде — только для неочевидного «почему», на английском, по правилам апстрима.
+
+## Правила инженерии (унаследованы от Voice)
+
+- Строй простейшую версию, решающую реальную проблему слушателя. Если edge case требует
+  много кода/данных/миграций — вынеси его в роадмап или спроси.
+- Каждая строка кода сопровождается годами — держи сложность низкой.
+- Код комментариев не дублирует; KDoc только там, где без него непонятно.
+
+## Архитектура надстройки
+
+Кратко — в [README.md](README.md), подробно — в [docs/PR-ARCHITECTURE.md](docs/PR-ARCHITECTURE.md).
+Карта модулей:
+
+- `:core:booksources:api` — контракты источников (`BookSource`, модели, реестр)
+- `:core:booksources:bazaknig` — источник baza-knig.top (DLE-парсер + декодер плейлиста)
+- `:core:booksources:rutor` — источник rutor.info (торренты)
+- `:core:downloader` — менеджер загрузок (HTTP + torrent), очередь, импорт в библиотеку
+- `:features:bookDownload` — UI поиска/загрузки (Compose)
+
+## Отношение к апстриму
+
+PRVoice — форк «навсегда открытый»: изменения публикуются под GPL-3.0. По возможности правки
+базовых модулей Voice держим минимальными и совместимыми с апстримом, чтобы merge из
+`upstream/main` проходил безболезненно.
