@@ -208,8 +208,10 @@ class BookDownloadManager(
       val next = store.data.first().firstOrNull { it.state == DownloadState.QUEUED }
       if (next == null) {
         notifications.hideProgress()
+        BookDownloadService.stop(context)
         return@launch
       }
+      BookDownloadService.start(context)
       runningIds.update { it + next.id }
       var current = next.copy(state = DownloadState.RUNNING, error = null)
       try {

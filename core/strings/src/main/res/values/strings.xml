@@ -181,6 +181,8 @@
     <string name="bookdownload.error.unknown">The download failed.</string>
     <!-- Name of the notification channel for books that download from the online sources. -->
     <string name="bookdownload.notification.channel">Book downloads</string>
+    <!-- Notification title while a book downloads and nothing reported in yet. -->
+    <string name="bookdownload.notification.active">Downloading books</string>
     <!-- Notification text once a book of the download feature finished downloading. The title is the name of the book. -->
     <string name="bookdownload.notification.done">Ready to listen</string>
     <!-- Notification text when the download of a book failed. The title is the name of the book. -->

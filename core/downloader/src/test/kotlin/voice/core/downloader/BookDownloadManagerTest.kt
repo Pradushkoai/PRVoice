@@ -376,7 +376,7 @@ class BookDownloadManagerTest {
       mediaScanTrigger = mockk<MediaScanTrigger>(relaxed = true),
       notifications = mockk<DownloadNotifications>(relaxed = true),
       context =
-        mockk {
+        mockk(relaxed = true) {
           every { filesDir } returns appDir
         },
       dispatcherProvider =

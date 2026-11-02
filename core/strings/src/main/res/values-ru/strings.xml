@@ -99,6 +99,7 @@
     <string name="bookdownload.error.no_folder">Сначала добавьте папку библиотеки, затем скачивайте книгу</string>
     <string name="bookdownload.error.unknown">Не удалось скачать</string>
     <string name="bookdownload.notification.channel">Загрузки книг</string>
+    <string name="bookdownload.notification.active">Скачивание книг</string>
     <string name="bookdownload.notification.done">Можно слушать</string>
     <string name="bookdownload.notification.failed">Скачивание не завершилось</string>
     <string name="bookdownload.search.load_more">Показать ещё</string>
