@@ -1,5 +1,6 @@
 package voice.core.downloader
 
+import io.mockk.every
 import io.mockk.mockk
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -18,6 +19,7 @@ import voice.core.booksources.BookInfo
 import voice.core.booksources.DownloadSpec
 import voice.core.booksources.SearchResult
 import voice.core.booksources.Track
+import voice.core.common.DispatcherProvider
 import voice.core.scanner.MediaScanTrigger
 
 class BookDownloadManagerTest {
@@ -56,15 +58,22 @@ class BookDownloadManagerTest {
   private class TestFolderProvider : DownloadFolderProvider {
     val opened = mutableListOf<BookDownload>()
     var failWith: Exception? = null
+    val written = mutableListOf<String>()
 
     override suspend fun openFolder(download: BookDownload): BookDownloadFolder {
       opened.add(download)
       failWith?.let { throw it }
-      return BookDownloadFolder(uri = "folder://${download.id}", writer = FakeWriter)
+      return BookDownloadFolder(
+        uri = "folder://${download.id}",
+        writer =
+          FakeWriter { fileName ->
+            written.add(fileName)
+          },
+      )
     }
   }
 
-  private object FakeWriter : BookFolderWriter {
+  private class FakeWriter(val onWrite: (String) -> Unit = {}) : BookFolderWriter {
     override fun stillExists(): Boolean = true
 
     override fun exists(fileName: String): Boolean = false
@@ -73,8 +82,59 @@ class BookDownloadManagerTest {
 
     override fun delete(fileName: String) {}
 
-    override fun outputStream(fileName: String): java.io.OutputStream =
-      java.io.ByteArrayOutputStream()
+    override fun outputStream(fileName: String): java.io.OutputStream {
+      onWrite(fileName)
+      return java.io.ByteArrayOutputStream()
+    }
+  }
+
+  /** Resolves one audio file and reports it fully downloaded. */
+  private open class FakeTorrentEngine : TorrentEngine {
+    val resolved = mutableListOf<TorrentRef>()
+
+    override open suspend fun resolve(
+      ref: TorrentRef,
+      cacheDir: java.io.File,
+    ): ResolvedTorrent =
+      ResolvedTorrent(
+          infoHash = "abc",
+          magnetUri = ref.magnetUri ?: "",
+          files =
+            listOf(
+              TorrentFile(index = 0, path = "Book/01.mp3", sizeBytes = 100),
+              TorrentFile(index = 1, path = "Book/cover.jpg", sizeBytes = 10),
+            ),
+          metadataFile = java.io.File(cacheDir, "metadata.torrent"),
+        )
+        .also {
+          resolved.add(ref)
+          cacheDir.mkdirs()
+          it.metadataFile.writeBytes(byteArrayOf(1))
+        }
+
+    override suspend fun download(
+      torrent: ResolvedTorrent,
+      saveDir: java.io.File,
+      files: List<TorrentFile>,
+      onStats: suspend (TorrentStats) -> Unit,
+    ) {
+      saveDir.mkdirs()
+      files.forEach { file ->
+        java.io.File(saveDir, file.path).apply {
+          parentFile?.mkdirs()
+          writeBytes(ByteArray(file.sizeBytes.toInt()))
+        }
+      }
+      onStats(
+        TorrentStats(
+          doneBytes = files.sumOf { it.sizeBytes },
+          totalBytes = files.sumOf { it.sizeBytes },
+          downloadRateBytes = 0,
+          seeds = 2,
+          peers = 1,
+        ),
+      )
+    }
   }
 
   private fun book(title: String): BookInfo =
@@ -93,6 +153,22 @@ class BookDownloadManagerTest {
               Track(url = "https://example.com/$title/2.mp3", name = "02"),
             ),
         ),
+    )
+
+  private fun torrentBook(title: String): BookInfo =
+    BookInfo(
+      result =
+        SearchResult(
+          sourceId = "rutor",
+          title = title,
+          url = "https://example.com/torrent/$title",
+          torrent =
+            voice.core.booksources.TorrentSummary(
+              magnetUri = "magnet:?xt=urn:btih:abc",
+              seeders = 4,
+            ),
+        ),
+      files = DownloadSpec.Torrent(magnetUri = "magnet:?xt=urn:btih:abc"),
     )
 
   @Test
@@ -238,17 +314,78 @@ class BookDownloadManagerTest {
     assertEquals(1, engine.downloads.size)
   }
 
+  @Test
+  fun `a torrent download resolves its files and lands in the library`() = runTest {
+    val engine = RecordingEngine()
+    val torrentEngine = FakeTorrentEngine()
+    val folderProvider = TestFolderProvider()
+    val manager = manager(engine, folderProvider, torrentEngine)
+
+    manager.start()
+    manager.enqueue(torrentBook("Гоголь"), sourceName = "Rutor")
+    advanceUntilIdle()
+
+    val download = manager.downloads.value.single().download
+    assertEquals(DownloadState.DONE, download.state)
+    // the cover jpg stayed out, only the audio counts
+    assertEquals(listOf("Book/01.mp3"), download.torrentFiles)
+    assertEquals(100L, download.totalBytes)
+    // the file was copied into the library folder with a flattened name
+    assertEquals(listOf("Book - 01.mp3"), folderProvider.written)
+    assertEquals(1, download.completedFiles)
+  }
+
+  @Test
+  fun `a torrent without audio fails with no metadata`() = runTest {
+    val engine = RecordingEngine()
+    val torrentEngine =
+      object : FakeTorrentEngine() {
+        override suspend fun resolve(
+          ref: TorrentRef,
+          cacheDir: java.io.File,
+        ): ResolvedTorrent =
+          super.resolve(ref, cacheDir).let {
+            ResolvedTorrent("abc", "", emptyList(), it.metadataFile)
+          }
+      }
+    val manager = manager(engine, torrentEngine = torrentEngine)
+
+    manager.start()
+    manager.enqueue(torrentBook("Гоголь"), sourceName = "Rutor")
+    advanceUntilIdle()
+
+    val download = manager.downloads.value.single().download
+    assertEquals(DownloadState.FAILED, download.state)
+    assertEquals(DownloadError.NO_METADATA, download.error)
+  }
+
   private fun TestScope.manager(
     engine: RecordingEngine,
     folderProvider: TestFolderProvider = TestFolderProvider(),
+    torrentEngine: TorrentEngine = FakeTorrentEngine(),
   ): BookDownloadManager {
-    Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+    val dispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(dispatcher)
+    val appDir = kotlin.io.path.createTempDirectory("managerTest").toFile()
+    appDir.deleteOnExit()
     return BookDownloadManager(
       store = store,
       folderProvider = folderProvider,
       engine = engine,
+      torrentEngine = torrentEngine,
       mediaScanTrigger = mockk<MediaScanTrigger>(relaxed = true),
       notifications = mockk<DownloadNotifications>(relaxed = true),
+      context =
+        mockk {
+          every { filesDir } returns appDir
+        },
+      dispatcherProvider =
+        DispatcherProvider(
+          main = dispatcher,
+          io = dispatcher,
+          mainImmediate = dispatcher,
+          default = dispatcher,
+        ),
     )
   }
 }

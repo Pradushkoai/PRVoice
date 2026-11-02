@@ -19,5 +19,7 @@ dependencies {
   implementation(libs.datastore)
   implementation(libs.androidxCore)
 
+  implementation(libs.bundles.libtorrent4j)
+
   testImplementation(libs.okhttp.mockwebserver)
 }

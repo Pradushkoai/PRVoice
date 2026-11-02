@@ -203,25 +203,20 @@ private fun DownloadSection(
 ) {
   val torrent = content.files is DownloadSpec.Torrent
   when {
-    torrent ->
-      Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth(),
-      ) {
-        Text(
-          stringResource(StringsR.string.bookdownload_details_torrent_soon),
-          style = MaterialTheme.typography.bodyMedium,
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-      }
     download == null -> {
-      val trackCount = (content.files as DownloadSpec.HttpFiles).tracks.size
-      Button(onClick = onDownloadClick, modifier = Modifier.fillMaxWidth()) {
-        Text(
-          stringResource(StringsR.string.bookdownload_details_download) +
-            " · " +
-            stringResource(StringsR.string.bookdownload_details_files, trackCount),
-        )
+      if (torrent) {
+        Button(onClick = onDownloadClick, modifier = Modifier.fillMaxWidth()) {
+          Text(stringResource(StringsR.string.bookdownload_details_torrent_download))
+        }
+      } else {
+        val trackCount = (content.files as DownloadSpec.HttpFiles).tracks.size
+        Button(onClick = onDownloadClick, modifier = Modifier.fillMaxWidth()) {
+          Text(
+            stringResource(StringsR.string.bookdownload_details_download) +
+              " · " +
+              stringResource(StringsR.string.bookdownload_details_files, trackCount),
+          )
+        }
       }
     }
     download.download.state == DownloadState.DONE ->
@@ -257,17 +252,36 @@ private fun DownloadSection(
           when (state) {
             DownloadState.QUEUED,
             DownloadState.RUNNING ->
-              stringResource(
-                StringsR.string.bookdownload_details_progress,
-                download.download.completedFiles,
-                download.download.files.size,
-              )
+              if (download.download.torrent != null) {
+                listOfNotNull(
+                    stringResource(
+                      StringsR.string.bookdownload_details_progress_bytes,
+                      formatBytes(download.download.progressBytes),
+                      formatBytes(download.download.totalBytes ?: 0),
+                    ),
+                    download.seeds?.let { seeds ->
+                      download.peers?.let { peers ->
+                        stringResource(StringsR.string.bookdownload_details_peers, seeds, peers)
+                      }
+                    },
+                  )
+                  .joinToString(" · ")
+              } else {
+                stringResource(
+                  StringsR.string.bookdownload_details_progress,
+                  download.download.completedFiles,
+                  download.download.files.size,
+                )
+              }
+            DownloadState.RESOLVING ->
+              stringResource(StringsR.string.bookdownload_details_resolving)
             else -> download.download.error?.let { errorText(it) } ?: ""
           }
         Text(text, style = MaterialTheme.typography.bodyMedium)
         when (state) {
           DownloadState.QUEUED,
-          DownloadState.RUNNING ->
+          DownloadState.RUNNING,
+          DownloadState.RESOLVING ->
             IconButton(onClick = onPauseClick) {
               Icon(
                 VoiceIcons.Pause,
@@ -284,6 +298,20 @@ private fun DownloadSection(
   }
 }
 
+/** Formats a byte count without pulling in a formatter, e.g. `12,3 МБ`. */
+internal fun formatBytes(bytes: Long): String {
+  if (bytes < 1024) return "$bytes Б"
+  val units = listOf("КБ", "МБ", "ГБ")
+  var value = bytes.toDouble()
+  var unit = "Б"
+  for (candidate in units) {
+    if (value < 1024) break
+    value /= 1024
+    unit = candidate
+  }
+  return String.format(java.util.Locale.getDefault(), "%.1f %s", value, unit)
+}
+
 @Composable
 internal fun errorText(error: voice.core.downloader.DownloadError): String =
   when (error) {
@@ -293,6 +321,8 @@ internal fun errorText(error: voice.core.downloader.DownloadError): String =
       stringResource(StringsR.string.bookdownload_error_changed)
     voice.core.downloader.DownloadError.NO_FOLDER ->
       stringResource(StringsR.string.bookdownload_error_no_folder)
+    voice.core.downloader.DownloadError.NO_METADATA ->
+      stringResource(StringsR.string.bookdownload_error_no_metadata)
     voice.core.downloader.DownloadError.UNKNOWN ->
       stringResource(StringsR.string.bookdownload_error_unknown)
   }

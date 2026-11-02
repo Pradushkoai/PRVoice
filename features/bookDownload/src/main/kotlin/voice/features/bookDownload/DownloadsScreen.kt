@@ -159,11 +159,21 @@ private fun DownloadRow(
           when (state) {
             DownloadState.QUEUED -> stringResource(StringsR.string.bookdownload_details_queued)
             DownloadState.RUNNING ->
-              stringResource(
-                StringsR.string.bookdownload_details_progress,
-                download.download.completedFiles,
-                download.download.files.size,
-              )
+              if (download.download.torrent != null) {
+                stringResource(
+                  StringsR.string.bookdownload_details_progress_bytes,
+                  formatBytes(download.download.progressBytes),
+                  formatBytes(download.download.totalBytes ?: 0),
+                )
+              } else {
+                stringResource(
+                  StringsR.string.bookdownload_details_progress,
+                  download.download.completedFiles,
+                  download.download.files.size,
+                )
+              }
+            DownloadState.RESOLVING ->
+              stringResource(StringsR.string.bookdownload_details_resolving)
             DownloadState.PAUSED -> stringResource(StringsR.string.bookdownload_downloads_pause)
             DownloadState.FAILED ->
               download.download.error?.let { errorText(it) }
@@ -178,7 +188,8 @@ private fun DownloadRow(
         Row {
           when (state) {
             DownloadState.QUEUED,
-            DownloadState.RUNNING ->
+            DownloadState.RUNNING,
+            DownloadState.RESOLVING ->
               IconButton(onClick = { onPause(download.download.id) }) {
                 Icon(
                   VoiceIcons.Pause,

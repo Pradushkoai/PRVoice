@@ -114,6 +114,14 @@ spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle
 compose-lint-checks = "com.slack.lint.compose:compose-lint-checks:1.6.1"
 
 [bundles]
+libtorrent4j = [
+  "libtorrent4j",
+  "libtorrent4j-android-arm",
+  "libtorrent4j-android-arm64",
+  "libtorrent4j-android-x86",
+  "libtorrent4j-android-x86_64",
+]
+
 compose = [
   "compose-ui-ui",
   "compose-ui-tooling-preview",
