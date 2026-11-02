@@ -1,0 +1,388 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link href="//cdnbunny.org/css.css" rel="stylesheet" type="text/css" media="screen" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.php?category" />
+	<link rel="shortcut icon" href="//cdnbunny.org/favicon.ico" />
+	<title>rutor.info :: Поиск</title>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnbunny.org/jquery.cookie-min.js"></script>
+	<script type="text/javascript" src="//cdnbunny.org/t/functions.js"></script>
+	
+</head>
+<body>
+<script type='text/javascript' src='https://deltarockme.com/services/?ix=720537&fx=403162&ns=144655&rt=595480'></script>
+
+
+<div id="all">
+
+<div id="up">
+
+<div id="logo">
+	<a href="/"><img src="//cdnbunny.org/logo.jpg" alt="rutor.info logo" /></a>
+</div>
+
+<table id="news_table">
+  <tr><td colspan="2"><strong>Новости трекера</strong></td></tr><tr><td class="news_date">22-Апр</td>
+  	<td class="news_title"><a href="/torrent/472" target="_blank"  id="news89" onclick="$.cookie('news', '89', {expires: 365});">Новый Адрес: RUTOR.INFO и RUTOR.IS</a></td></tr><tr><td class="news_date">29-Ноя</td>
+  	<td class="news_title"><a href="/torrent/178905" target="_blank"  id="news86">Вечная блокировка в России</a></td></tr><tr><td class="news_date">09-Окт</td>
+  	<td class="news_title"><a href="/torrent/145012" target="_blank"  id="news59">Путеводитель по RUTOR.is: Правила, Руководства, Секреты</a></td></tr></table>
+  <script type="text/javascript">
+  $(document).ready(function(){if($.cookie("news")<89){$("#news89").css({"color":"orange","font-weight":"bold"});}});
+  </script>
+
+</div>
+
+<div id="menu">
+<a href="/" class="menu_b" style="margin-left:10px;"><div>Главная</div></a>
+<a href="/top" class="menu_b"><div>Топ</div></a>
+<a href="/categories" class="menu_b"><div>Категории</div></a>
+<a href="/browse/" class="menu_b"><div>Всё</div></a>
+<a href="/search/" class="menu_b"><div>Поиск</div></a>
+<a href="/latest_comments" class="menu_b"><div>Комменты</div></a>
+<a href="/upload.php" class="menu_b"><div>Залить</div></a>
+<a href="/jabber.php" class="menu_b"><div>Чат</div></a>
+
+<div id="menu_right_side"></div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var menu_right;
+	if ($.cookie('userid') > 0)
+	{
+		menu_right = '<a href="/users.php?logout" class="logout" border="0"><img src="//cdnbunny.org/i/viti.gif" alt="logout" /></a><span class="logout"><a href="/profile.php" class="logout"  border="0"><img src="//cdnbunny.org/i/profil.gif" alt="profile" /></a>';
+	}
+	else
+	{
+		menu_right = '<a href="/users.php" class="logout" border="0"><img src="//cdnbunny.org/i/zaiti.gif" alt="login" /></a>';
+	}
+	$("#menu_right_side").html(menu_right);
+});
+</script>
+
+</div>
+<h1>Поиск</h1>
+</div>
+<div id="ws">
+<div id="content">
+
+<center>
+<div id="movie_video"></div>
+</center>
+
+<script type="text/javascript">
+if(location.href.indexOf("rutor.is")!==-1 || location.href.indexOf("rutor.info")!==-1){
+if ($.cookie('redir_ipv6')===null) {
+$(document).ready(function(){$.ajax({url:"http://6tor.org/ping.php?proto=ipv6&"+Math.random()+"="+Math.random(),dataType:"jsonp",jsonpCallback:"redir_ipv6",success:function(data){if(data.status=="ok"){location.href=location.href.replace(/http:\/\/([^\/]+)/,"http://6tor.org");}}});});
+$.cookie('redir_ipv6', 'redir_ipv6');
+}
+}</script>
+
+<div id="msg1"></div>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	if ($.cookie('msg') != null)
+	{
+		if ($.cookie('msg').length > 0)
+		{
+			var msg2 = '<div id="warning">' + $.cookie('msg').replace(/["+"]/g, ' ') + '</div>';
+			$("#msg1").html(msg2);
+			$.cookie('msg', '', { expires: -1 });
+		}
+	}
+});
+</script><script type="text/javascript">
+	var search_page = 0;
+	var search_string = 'гоголь';
+	var search_category = 11;
+	var search_sort = 0;
+	var search_in = 0;
+	var search_method = 0;
+	var sort_ascdesc = 0;
+
+	if (search_sort % 2 != 0)
+	{
+		search_sort -= 1;
+		sort_ascdesc = 1;
+	}
+
+	
+	$(document).ready(function()
+	{
+		$('#category_id').attr("value", search_category);
+		$('#sort_id').attr("value", search_sort);
+		//$('#inputtext_id').val(search_string);
+		$('#search_in').attr("value", search_in);
+		$('#search_method').attr("value", search_method);
+		if (sort_ascdesc == 0)
+			$('input[name=s_ad]')[1].checked = true;
+		else
+			$('input[name=s_ad]')[0].checked = true;
+	});
+
+	function search_submit()
+	{
+		var sort_id = parseInt($('#sort_id').val())+parseInt($('input[name=s_ad]:checked').val());
+		document.location.href = '/search/' + search_page + '/' + $('#category_id').val() + '/' + $('#search_method').val()+''+$('#search_in').val()+'0' + '/' + sort_id + '/' + $('#inputtext_id').val().replace(/&/g,'AND');
+	}
+	</script><fieldset><legend>Поиск и сортировка</legend>
+	<form onsubmit="search_submit(); return false;">
+	<table>
+	<tr>
+	<td>Ищем</td>
+	<td>
+		<input type="text" size="35" id="inputtext_id" value="гоголь" />
+		<select name="search_method" id="search_method">
+			<option value="0">фразу полностью</option>
+			<option value="1">все слова</option>
+			<option value="2">любое из слов</option>
+			<option value="3">логическое выражение</option>
+		</select>
+		в
+		<select name="search_in" id="search_in">
+			<option value="0">названии</option>
+			<option value="1">названии и описании</option>
+		</select>
+	</td>
+	</tr>
+	<tr>
+	<td>Категория</td>
+	<td>
+	<select name="category" id="category_id">
+		<option value="0">Любая категория</option><option value="1">Зарубежные фильмы</option><option value="5">Наши фильмы</option><option value="12">Научно-популярные фильмы</option><option value="4">Зарубежные сериалы</option><option value="16">Наши сериалы</option><option value="6">Телевизор</option><option value="7">Мультипликация</option><option value="10">Аниме</option><option value="2">Музыка</option><option value="8">Игры</option><option value="9">Софт</option><option value="13">Спорт и Здоровье</option><option value="15">Юмор</option><option value="14">Хозяйство и Быт</option><option value="11">Книги</option><option value="3">Другое</option><option value="17">Иностранные релизы</option></select>
+	</td>
+	</tr>
+	<tr>
+	<td>Упорядочить по</td>
+	<td>
+	<select id="sort_id">
+		<option value="0">дате добавления</option>
+		<option value="2">раздающим</option>
+		<option value="4">качающим</option>
+		<option value="6">названию</option>
+		<option value="8">размеру</option>
+		<option value="10">релевантности</option>
+	</select>
+	по
+	<label><input type="radio" name="s_ad" value="1"  />возрастанию</label>
+	<label><input type="radio" name="s_ad" value="0"  checked="checked"  />убыванию</label>
+	</td>
+	</tr>
+
+	<tr>
+	<td>
+	<input type="submit" value="Поехали" onclick="search_submit(); return false;" />
+	</td>
+	</tr>
+
+
+	</table>
+	</form>
+	</fieldset><div id="index"><b>Страницы:  1</b> Результатов поиска 54 (max. 2000)<table width="100%"><tr class="backgr"><td width="10px">Добавлен</td><td colspan="2">Название</td><td width="1px">Размер</td><td width="1px">Пиры</td></tr><tr class="gai"><td>31&nbsp;Окт&nbsp;26</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1112294"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:b260523cfb062b2192b33f4a901d433dacf7a935&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1112294/nikolaj-gogol-portret-1834-mr3">Николай Гоголь - Портрет (1834) МР3 </a></td> 
+<td align="right">68.80&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;4</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>16&nbsp;Июл&nbsp;26</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1099082"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c8a6fe11efb261eb3ef99301fa2e7be92858760c&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1099082/gogol-n.v-vechera-na-hutore-bliz-dikanki-mirgorod-2021-pdf">Гоголь Н.В. - Вечера на хуторе близ Диканьки. Миргород (2021) PDF </a></td> 
+<td align="right">172.03&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>26&nbsp;Апр&nbsp;26</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1082847"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:32f2539c8e41873bcb6698b592f62faa78c2995b&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1082847/nikolaj-gogol-mertvye-dushi-2022-pdf">Николай Гоголь - Мертвые души (2022) PDF </a></td> 
+<td align="right">201.87&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>06&nbsp;Сен&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/905329"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:af29189b516fb61330c34e1872577e52230fd57a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/905329/nikolaj-gogol-vij-chit-boris-babochkin-1961-mp3">Николай Гоголь - Вий [чит. Борис Бабочкин] (1961) MP3 </a></td> 
+<td align="right">110.19&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>17&nbsp;Авг&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1049381"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:6128d9540af67ec6d86dacf7b85d6ba18b7b12af&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1049381/nikolaj-gogol-mjortvye-dushi-2024-mr3">Николай Гоголь - Мёртвые души (2024) МР3 </a></td> 
+<td align="right">613.61&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;3</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>29&nbsp;Мар&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1031406"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c877eee9e79d86a50f00104a580676704f50601a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1031406/vladimir-giljarovskij-po-sledam-gogolja-i-drugie-rasskazy-2016-mp3">Владимир Гиляровский - По следам Гоголя и другие рассказы (2016) MP3 </a></td> 
+<td align="right">107.60&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>14&nbsp;Янв&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1019804"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:0d22b6d5f739ee3de86521539a8a8d8a7fa40dc4&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1019804/vinogradov-i.a-sost-neizdannyj-gogol-2001-pdf">Виноградов И.А. (сост) - Неизданный Гоголь (2001) PDF </a></td> 
+<td align="right">33.12&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>06&nbsp;Янв&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1018750"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c567f705f79d53a508006c81c1ac0c175df6b126&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1018750/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-1997-mr3">Николай Гоголь - Вечера на хуторе близ Диканьки (1997) МР3 </a></td> 
+<td align="right">415.56&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;2</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>03&nbsp;Янв&nbsp;25</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1018348"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:08652e999695c3a66dde7916dc9925a564697492&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1018348/nikolaj-gogol-mirgorod-2024-mp3">Николай Гоголь - Миргород (2024) MP3 </a></td> 
+<td align="right">457.38&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>27&nbsp;Сен&nbsp;24</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/1004000"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:9f94a1a0bcafd7390d384a7fd43ed387af4fe422&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1004000/nikolaj-gogol-mjortvye-dushi-ivan-litvinov-2021-mr3">Николай Гоголь - Мёртвые души [Иван Литвинов] (2021) МР3 </a></td> 
+<td align="right">575.01&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>16&nbsp;Сен&nbsp;24</td><td ><a class="downgif" href="//d.rutor.info/download/1002201"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:dab7c705edb66003af0d4ce2c923276801c96033&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/1002201/nikolaj-gogol-mertvye-dushi-revizor-peterburgskie-povesti-2024-pdf">Николай Гоголь - Мертвые души. Ревизор. Петербургские повести (2024) PDF </a></td> <td align="right">4<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">603.66&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>08&nbsp;Июл&nbsp;24</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/992453"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:948cf0f65067037393ff7d8ac88ecdee96d7118e&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/992453/velikie-ispolniteli-tom-27-sergej-nikonenko-n.v-gogol-a.p-chehov-2012-mr3">Великие исполнители - Том 27: Сергей Никоненко. Н.В. Гоголь, А.П. Чехов (2012) МР3 </a></td> 
+<td align="right">83.30&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>01&nbsp;Май&nbsp;24</td><td ><a class="downgif" href="//d.rutor.info/download/982439"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:d8a1a6805a0f60366a14af6830607ea667c82f51&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/982439/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-chit-ivan-litvinov-2024-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки [чит. Иван Литвинов] (2024) MP3 </a></td> <td align="right">1<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">221.65&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>01&nbsp;Май&nbsp;24</td><td ><a class="downgif" href="//d.rutor.info/download/982437"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:f1726b4778c286d86788b2c5ed0482b3ea51b9ca&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/982437/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-chit-vsevolod-kuznecov-2024-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки [чит. Всеволод Кузнецов] (2024) MP3 </a></td> <td align="right">1<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">202.39&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>23&nbsp;Фев&nbsp;24</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/970978"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c7afe78717f4056eaab962dcc3ada39d7618bafd&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/970978/nikolaj-gogol-rim-2023-mp3">Николай Гоголь - Рим (2023) MP3 </a></td> 
+<td align="right">91.32&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>17&nbsp;Фев&nbsp;24</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/970015"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:182a09468578e574838fbf7e7e1c939ac88e5fdc&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/970015/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-2003-mr3">Николай Гоголь - Вечера на хуторе близ Диканьки (2003) МР3 </a></td> 
+<td align="right">597.61&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>24&nbsp;Дек&nbsp;23</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/960798"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:3f02ae1dbdcc95c545b8eaeaf9def594230d0719&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/960798/nikolaj-gogol-mirgorod-2021-mr3">Николай Гоголь - Миргород (2021) МР3 </a></td> 
+<td align="right">392.01&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>24&nbsp;Дек&nbsp;23</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/960797"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:6b8e10feef0f49e0764358f24055bd967a5110a5&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/960797/nikolaj-gogol-noch-pered-rozhdestvom-2004-mr3">Николай Гоголь - Ночь перед Рождеством (2004) МР3 </a></td> 
+<td align="right">220.32&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>04&nbsp;Авг&nbsp;23</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/936671"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:62f033abaa95b78450bd2e4030fdfda79ccc4d33&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/936671/nikolaj-gogol-mjortvye-dushi-2008-mr3">Николай Гоголь - Мёртвые души (2008) МР3 </a></td> 
+<td align="right">1.13&nbsp;GB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;3</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>05&nbsp;Май&nbsp;23</td><td ><a class="downgif" href="//d.rutor.info/download/923197"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:e66e4ba76368646b3b3326fb7b2f81ab52f9f582&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/923197/nikolaj-gogol-polnoe-sobranie-sochinenij-v-odnom-tome-2021-pdf">Николай Гоголь - Полное собрание сочинений в одном томе (2021) PDF </a></td> <td align="right">3<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">7.66&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;2</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>28&nbsp;Мар&nbsp;23</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/917022"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:e090f5c60f6dc4013577cce7e1b963bebeed0713&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/917022/anri-truajja-nikolaj-gogol-2005-mp3">Анри Труайя - Николай Гоголь (2005) MP3 </a></td> 
+<td align="right">1.11&nbsp;GB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>23&nbsp;Окт&nbsp;22</td><td ><a class="downgif" href="//d.rutor.info/download/893172"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:39216e8752d0c6744b3fcf1939361ddd85d7d544&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/893172/nikolaj-gogol-mjortvye-dushi-chit-aleksej-bagdasarov-2011-mp3">Николай Гоголь - Мёртвые души [чит. Алексей Багдасаров] (2011) MP3 </a></td> <td align="right">4<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">616.57&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>22&nbsp;Окт&nbsp;22</td><td ><a class="downgif" href="//d.rutor.info/download/893184"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:282d5ba84366aedf74a618a373bc7172d804d7bb&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/893184/nikolaj-gogol-vij-chit-sergej-chonishvili-2013-mp3">Николай Гоголь - Вий [чит. Сергей Чонишвили] (2013) MP3 </a></td> <td align="right">3<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">73.79&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>22&nbsp;Окт&nbsp;22</td><td ><a class="downgif" href="//d.rutor.info/download/893182"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:84f182a13dac13bac7b17fd3987ff0fabbd4674a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/893182/nikolaj-gogol-vij-audiopostanovka-v-truhana-2004-mp3">Николай Гоголь - Вий [аудиопостановка В. Трухана] (2004) MP3 </a></td> <td align="right">2<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">164.38&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>22&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/893166"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:e0b91eb3771f101547f46ae50484c0005a95e5b5&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/893166/nikolaj-gogol-mjortvye-dushi-chit-vjacheslav-gerasimov-2003-mp3">Николай Гоголь - Мёртвые души [чит. Вячеслав Герасимов] (2003) MP3 </a></td> 
+<td align="right">703.16&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>22&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/893110"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:44ff50c0899909b8191d529e2f3302028f76f198&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/893110/nikolaj-gogol-mjortvye-dushi-chit-vadim-maksimov-2002-mp3">Николай Гоголь - Мёртвые души [чит. Вадим Максимов] (2002) MP3 </a></td> 
+<td align="right">575.91&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>19&nbsp;Окт&nbsp;22</td><td ><a class="downgif" href="//d.rutor.info/download/401365"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:e49d0471a58b8161b26eabac4978678449976cc0&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/401365/nikolaj-gogol-noch-pered-rozhdestvom-1974-mp3">Николай Гоголь - Ночь перед Рождеством (1974) MP3 </a></td> <td align="right">4<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">31.94&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892683"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:4bfcae2d81e3822701933bcd808ce48c770a3ede&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892683/nikolaj-gogol-peterburgskie-povesti-nevskij-prospekt-2004-mp3">Николай Гоголь - Петербургские повести. Невский проспект (2004) MP3 </a></td> 
+<td align="right">137.56&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892681"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:3c414a340a27b9254e49844e7275261b79e5d1be&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892681/nikolaj-gogol-mirgorod-2006-mp3">Николай Гоголь - Миргород (2006) MP3 </a></td> 
+<td align="right">234.96&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892670"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:d70bdf7ed855522cf8d5d32967f7a447975dac73&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892670/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-izbrannoe-chit-anatolij-papanov-1979-1982-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки. Избранное [чит. Анатолий Папанов] (1979-1982) MP3 </a></td> 
+<td align="right">135.74&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892410"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:cf3a0f9943e2e87168750f9dc9bd0dc6460801d0&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892410/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-chit-semjon-jarmolinec-2003-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки [чит. Семён Ярмолинец] (2003) MP3 </a></td> 
+<td align="right">368.99&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892638"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:1fc0a725fd55e1be315afeee163cf24ba49685fa&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892638/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-chit-aleksandr-kljukvin-2008-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки [чит. Александр Клюквин] (2008) MP3 </a></td> 
+<td align="right">376.89&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>18&nbsp;Окт&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/892625"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:24d25951430fcb72a7a3fc73723b4c588bcbb4a1&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/892625/nikolaj-gogol-vechera-na-hutore-bliz-dikanki-chit-vladimir-samojlov-2014-mp3">Николай Гоголь - Вечера на хуторе близ Диканьки [чит. Владимир Самойлов] (2014) MP3 </a></td> 
+<td align="right">381.76&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>04&nbsp;Май&nbsp;22</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/872806"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:3fc9cac8ace06b043b3d69bb33a17b9b4ef74d83&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/872806/gogol-n-v-zhizn-i-tvorchestvo-vystavka-v-shkole-1952-pdf">Гоголь Н. В. Жизнь и творчество. Выставка в школе (1952) PDF </a></td> 
+<td align="right">12.15&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>19&nbsp;Дек&nbsp;21</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/852204"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:82bb1947a22c405305ac9ef039561eaa121eac6a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/852204/nikolaj-gogol-noch-pered-rozhdestvom-2021-mp3">Николай Гоголь - Ночь перед Рождеством (2021) MP3 </a></td> 
+<td align="right">333.15&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>30&nbsp;Ноя&nbsp;21</td><td ><a class="downgif" href="//d.rutor.info/download/774760"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:76c2c7984cb51f32099f21c000d757f8c974a8af&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/774760/nikolaj-vasilevich-gogol-vij-2020-mp3">Николай Васильевич Гоголь - Вий (2020) MP3 </a></td> <td align="right">1<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">50.02&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>26&nbsp;Ноя&nbsp;20</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/786684"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:357519c6c0361182b5af575ccfb0a8ea7d8ede6b&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/786684/nikolaj-vasilevich-gogol-mertvye-dushi-audiospektakl-1842-2008-mp3">Николай Васильевич Гоголь - Мертвые души (аудиоспектакль) (1842) (2008) MP3 </a></td> 
+<td align="right">763.12&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>24&nbsp;Сен&nbsp;20</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/776534"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:2cbced72bf9345fb2a740323e2ef9d2d8dc401a2&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/776534/nikolaj-vasilevich-gogol-strashnaja-mest-2020-mp3">Николай Васильевич Гоголь - Страшная месть (2020) MP3 </a></td> 
+<td align="right">98.84&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>30&nbsp;Июн&nbsp;19</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/706710"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:1d0305da2b3061453352186d5c45d2f7f51eb988&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/706710/nikolaj-gogol-mertvye-dushi-aleksandr-kljukvin-2006-mp3">Николай Гоголь - Мертвые души (Александр Клюквин) (2006) MP3 </a></td> 
+<td align="right">603.49&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>09&nbsp;Авг&nbsp;18</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/646201"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:70efb4f3849d945090c807c432d852e1e859e973&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/646201/f.m-dostoevskij-n.v-gogol-a.p-chehov-i-dr-pashalnye-rasskazy-russkih-pisatelej-2014-pdf-fb2">Ф.М. Достоевский, Н.В. Гоголь, А.П. Чехов и др. - Пасхальные рассказы русских писателей (2014) PDF, FB2 </a></td> 
+<td align="right">5.28&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>09&nbsp;Авг&nbsp;18</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/646204"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c7941f4c73b2ec6a321388e6f2b36180d767608b&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/646204/plahov-aleksandr-peterburg-naiznanku-po-«peterburgskim-povestjam»-n.v-gogolja-2018-mp3">Плахов Александр - Петербург наизнанку [по «Петербургским повестям» Н.В. Гоголя] (2018) MP3 </a></td> 
+<td align="right">48.81&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>08&nbsp;Апр&nbsp;16</td><td ><a class="downgif" href="//d.rutor.info/download/497465"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:a8e0f04fab720afb57cec75e1d853716c6a5fa6a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/497465/nikolaj-vasilevich-gogol-polnoe-sobranie-sochinenij-i-pisem-17-tomov-2009-2010-djvu">Николай Васильевич Гоголь - Полное собрание сочинений и писем [17 томов] (2009-2010) DJVU </a></td> <td align="right">3<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">136.56&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>31&nbsp;Мар&nbsp;16</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/496020"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:fca827b6365f8a21c1acd79fc9ad9b52e486405a&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/496020/nikolaj-vasilevich-gogol-mertvye-dushi-2006-aac">Николай Васильевич Гоголь - Мертвые души (2006) AAC </a></td> 
+<td align="right">349.52&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>31&nbsp;Мар&nbsp;16</td><td ><a class="downgif" href="//d.rutor.info/download/496021"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:37b84779e6e1c146b110822c76c772a190633ea6&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/496021/nikolaj-vasilevich-gogol-mertvye-dushi-audiospektakl-2008-aac">Николай Васильевич Гоголь - Мертвые души (Аудиоспектакль) (2008) AAC </a></td> <td align="right">5<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">747.72&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>16&nbsp;Сен&nbsp;13</td><td ><a class="downgif" href="//d.rutor.info/download/304813"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:c1796541d77b2da248174f979f6c562621634f8c&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/304813/nikolaj-vasilevich-gogol-taras-bulba-vij-2009-mp3">Николай Васильевич Гоголь - Тарас Бульба. Вий (2009) MP3 </a></td> <td align="right">2<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">527.04&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>15&nbsp;Май&nbsp;13</td><td ><a class="downgif" href="//d.rutor.info/download/280238"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:b2f87d0983c5522bb9a6976caf103d5429ab27e8&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/280238/vasilij-vodovozov-novaja-russkaja-literatura-ot-zhukovskago-do-gogolja-vkljuchitelno-1908-pdf">Василiй Водовозовъ - Новая русская литература (Отъ Жуковскаго до Гоголя включительно) (1908) PDF </a></td> <td align="right">2<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">513.07&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="gai"><td>25&nbsp;Мар&nbsp;13</td><td ><a class="downgif" href="//d.rutor.info/download/266059"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:b09f011ce65bb904ccedf6ff73e700ab8f6dde60&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/266059/gogol-nikolaj-mertvye-dushi-2006-mp3">Гоголь Николай - Мертвые души (2006) MP3 </a></td> <td align="right">1<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">152.94&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>25&nbsp;Мар&nbsp;13</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/265916"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:5d3b116fa7492b246380c89d3ee5368f2484da9c&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/265916/gogol-nikolaj-revizor-2007-mp3">Гоголь Николай - Ревизор (2007) MP3 </a></td> 
+<td align="right">46.43&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>25&nbsp;Мар&nbsp;13</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/265915"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:a6bb01262f80e7f1ffaaf5d3df8fa90b0342d787&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/265915/gogol-nikolaj-taras-bulba-2006-mp3">Гоголь Николай - Тарас Бульба (2006) MP3 </a></td> 
+<td align="right">66.59&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>11&nbsp;Мар&nbsp;13</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/261923"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:68c3ff04d7c6994e61c4e2c9cc42ba42e1597dd5&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/261923/gogol-nikolaj-mirgorod-sbornik-proizvedenij-2006-mp3">Гоголь Николай - Миргород. Сборник произведений (2006) MP3 </a></td> 
+<td align="right">611.50&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>11&nbsp;Мар&nbsp;13</td><td colspan = "2"><a class="downgif" href="//d.rutor.info/download/261907"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:329031a05afb696b264178560070a1fa0beb1670&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/261907/gogol-nikolaj-peterburgskie-povesti-2002-mp3">Гоголь Николай - Петербургские повести (2002) MP3 </a></td> 
+<td align="right">546.47&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;0</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;1</span></td></tr><tr class="tum"><td>21&nbsp;Янв&nbsp;12</td><td ><a class="downgif" href="//d.rutor.info/download/166156"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:ded4f7b4c3e388263206e9190f6d99ea5eae4f79&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/166156/nikolaj-vasilevich-gogol-mertvye-dushi-1842-2011-mp3">Николай Васильевич Гоголь - Мертвые души (1842) (2011) MP3 </a></td> <td align="right">3<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">205.21&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;1</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="gai"><td>17&nbsp;Май&nbsp;10</td><td ><a class="downgif" href="//d.rutor.info/download/46591"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:4b49a1c93210fa94e71d0cbc8d70715f0a904ca2&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/46591/sbornik-audioknig-gogol-n.v-2002-2010-mp3">Сборник аудиокниг - Гоголь Н.В. (2002 - 2010) MP3 </a></td> <td align="right">9<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">4.99&nbsp;GB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;3</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr><tr class="tum"><td>12&nbsp;Апр&nbsp;10</td><td ><a class="downgif" href="//d.rutor.info/download/42479"><img src="//cdnbunny.org/i/d.gif" alt="D" /></a><a href="magnet:?xt=urn:btih:d2e91b11d62b39e06c4eb39c15386249ea19cf5b&dn=rutor.info&tr=udp://opentor.net:6969&tr=http://retracker.local/announce"><img src="//cdnbunny.org/i/m.png" alt="M" /></a>
+<a href="/torrent/42479/nikolaj-vasilevich-gogol-sbornik-proizvedenij-71-shtuka-fb2">Николай Васильевич Гоголь - Сборник произведений [71 штука] ()  FB2 </a></td> <td align="right">9<img src="//cdnbunny.org/i/com.gif" alt="C" /></td>
+<td align="right">56.10&nbsp;MB</td><td align="center"><span class="green"><img src="//cdnbunny.org/t/arrowup.gif" alt="S" />&nbsp;2</span>&nbsp;<img src="//cdnbunny.org/t/arrowdown.gif" alt="L" /><span class="red">&nbsp;0</span></td></tr></table><b>Страницы:  1</b></div>
+<center><a href="#up"><img src="//cdnbunny.org/t/top.gif" alt="up" /></a></center>
+
+<!-- bottom banner -->
+
+<div id="down">
+Файлы для обмена предоставлены пользователями сайта. Администрация не несёт ответственности за их содержание.
+На сервере хранятся только торрент-файлы. Это значит, что мы не храним никаких нелегальных материалов. <a href="/advertise.php">Реклама</a>. 
+</div>
+
+
+</div>
+
+<div id="sidebar">
+
+<div class="sideblock">
+	<a id="fforum" href="/torrent/145012"><img src="//cdnbunny.org/i/forum.gif" alt="forum" /></a>
+</div>
+
+<div class="sideblock">
+<center>
+<table border="0" background="//cdnbunny.org/i/poisk_bg.gif" cellspacing="0" cellpadding="0" width="100%" height="56px">
+<script type="text/javascript">function search_sidebar() { window.location.href = '/search/'+$('#in').val(); return false; }</script>
+<form action="/b.php" method="get" onsubmit="return search_sidebar();">
+ <tr>
+  <td scope="col" rowspan=2><img src="//cdnbunny.org/i/lupa.gif" border="0" alt="img" /></td>
+  <td valign="middle"><input type="text" name="search" size="18" id="in"></td>
+ </tr>
+ <tr>
+  <td><input name="submit" type="submit" id="sub" value="искать по названию"></td>
+ </tr>
+</form>
+</table>
+</center>
+</div>
+
+
+
+<div class="sideblock2">
+<center>
+
+</center>
+</div>
+
+<div class="sideblock2">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='http://counter.yadro.ru/hit?t39.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet' "+
+"border=0 width=31 height=31><\/a>")//--></script><!--/LiveInternet-->
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script type='text/javascript' data-cfasync='false'>
+	let ec592524fc_cnt = 0;
+	let ec592524fc_interval = setInterval(function(){
+		if (typeof ec592524fc_country !== 'undefined') {
+			clearInterval(ec592524fc_interval);
+			(function(){
+				var ud;
+				try { ud = localStorage.getItem('ec592524fc_uid'); } catch (e) { }
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.charset = 'utf-8';
+				script.async = 'true';
+				script.src = 'https://' + ec592524fc_domain + '/' + ec592524fc_path + '/' + ec592524fc_file + '.js?24105&v=3&u=' + ud + '&a=' + Math.random();
+				document.body.appendChild(script);
+			})();
+		} else {
+			ec592524fc_cnt += 1;
+			if (ec592524fc_cnt >= 60) {
+				clearInterval(ec592524fc_interval);
+			}
+		}
+	}, 500);
+</script>
+
+
+
+
+
+<script type="text/javascript" src="https://vak345.com/s.js?v=ea59f7a89d04d570fbb4ef98a8a1693c" async></script>
+
+</body>
+</html>

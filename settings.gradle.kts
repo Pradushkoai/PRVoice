@@ -67,6 +67,12 @@ include(":core:analytics:firebase")
 
 include(":core:common")
 
+include(":core:booksources:api")
+
+include(":core:booksources:bazaknig")
+
+include(":core:booksources:rutor")
+
 include(":core:data:api")
 
 include(":core:data:impl")
