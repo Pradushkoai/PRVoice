@@ -97,7 +97,9 @@ class BookSearchViewModel(
     if (searching) return
     val source = registry.byId(sourceId) ?: return
     val nextPage = pages[sourceId] ?: return
-    scope.launch {
+    // tracked in the same slot as the search, so starting a new search cancels a running load
+    searchJob?.cancel()
+    searchJob = scope.launch {
       searching = true
       try {
         val page = source.search(query.trim(), nextPage)

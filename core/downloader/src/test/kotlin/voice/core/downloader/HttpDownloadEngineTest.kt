@@ -48,7 +48,6 @@ class HttpDownloadEngineTest {
     server.enqueue(MockResponse(code = 200, body = "two"))
     val folder = FileBookFolderWriter(directory)
     val finished = mutableListOf<Int>()
-    val progress = mutableListOf<Pair<Long, Long>>()
 
     engine.download(
       download =
@@ -58,7 +57,7 @@ class HttpDownloadEngineTest {
         ),
       folder = folder,
       onFileFinished = { finished.add(it) },
-      onFileProgress = { bytes, total -> progress.add(bytes to total) },
+      onFileProgress = { _, _ -> },
     )
 
     assertEquals(listOf(1, 2), finished)

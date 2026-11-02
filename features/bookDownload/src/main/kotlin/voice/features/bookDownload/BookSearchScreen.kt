@@ -152,7 +152,7 @@ internal fun BookSearchScreen(
             contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
           ) {
-            items(results, key = { it.url }) { result ->
+            items(results, key = { "${it.sourceId}|${it.url}" }) { result ->
               SearchResultRow(
                 result,
                 sourceName(result, sources),
